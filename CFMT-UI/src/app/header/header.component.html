@@ -1,0 +1,97 @@
+<div class="header">
+    <a href="#default" class="logo">CFMT</a>
+    <div class="header-right">
+      <a  href="table">Table</a>
+      <a href="charts">Charts</a>
+      <a (click)="open(content)">New Entry</a>
+    </div>
+  </div>
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">New Entry</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+        <div class="form-group">
+          <label for="permalink">Permalink</label>
+          <div class="input-group">
+            <input id="permalink" name="permalink" class="form-control" ngModel >
+          </div>
+        </div>
+        <div class="form-group">
+            <label for="company">Company</label>
+            <div class="input-group">
+              <input id="company" name="company" class="form-control" ngModel>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="numEmps">numEmps</label>
+            <div class="input-group">
+              <input id="numEmps" name="numEmps" class="form-control" ngModel>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="category">category</label>
+            <div class="input-group">
+              <input id="category" name="category" class="form-control" ngModel>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="city">city</label>
+            <div class="input-group">
+              <input id="city" name="city" class="form-control" ngModel>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="state">	state</label>
+            <div class="input-group">
+              <input id="state" name="state" class="form-control" ngModel>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="FundedDate">FundedDate</label>
+            <div class="input-group">
+              <input id="fundedDate" name="fundedDate" class="form-control" ngModel>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="RaisedAmount">RaisedAmount</label>
+            <div class="input-group">
+              <input id="raisedAmt" name="raisedAmt" class="form-control" ngModel>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="RaisedCurrency">RaisedCurrency</label>
+            <div class="input-group">
+              <input id="raisedCurrency" name="raisedCurrency" class="form-control" ngModel>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="round">round</label>
+            <div class="input-group">
+              <select id="round" name="round" class="form-control" ngModel>
+                <option>a</option> 
+                <option>b</option>
+                <option>c</option>
+                <option>d</option>
+                <option>e</option>
+                <option>angel</option>
+                <option>seed</option>
+                <option>unattributed</option>
+                <option>debt_round</option>
+              </select>
+            </div>
+           
+          </div>
+          <div class="border text-center">
+            <button data-dismiss="modal" class="btn btn-info">Submit</button>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div>
+  </ng-template>

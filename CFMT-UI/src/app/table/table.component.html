@@ -1,0 +1,323 @@
+
+
+<div class="container">
+  <div class="flex-parent-element">
+    <mat-form-field appearance="standard">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+    </mat-form-field>
+    &nbsp;&nbsp;
+    <mat-form-field appearance="fill">
+      <mat-label>Select Round</mat-label>
+      <mat-select [(ngModel)]="selected" name="round" (selectionChange)="getSelected(selected)">
+        <mat-option *ngFor="let round of rounds" [value]="round">
+          {{round}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    &nbsp;&nbsp;
+   
+    <button mat-button (click)="exporter.exportTable('csv',{fileName:'CFMTdata'})">Download Csv</button>
+
+  </div>
+  <table mat-table matTableExporter [dataSource]="dataSource" #exporter="matTableExporter" [hiddenColumns]="[10]" class="mat-elevation-z6">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  
+    <!-- Position Column -->
+      <!-- Name Column --> 
+   <!-- Name Column -->
+   <ng-container matColumnDef="permalink">
+    <th mat-header-cell *matHeaderCellDef> Permalink </th>
+    <td mat-cell *matCellDef="let element"> {{element.permalink}} </td>
+  </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="company">
+      <th mat-header-cell *matHeaderCellDef> Company </th>
+      <td mat-cell *matCellDef="let element"> {{element.company}} </td>
+    </ng-container>
+  
+    <!-- Weight Column -->
+    <ng-container matColumnDef="numEmps">
+      <th mat-header-cell *matHeaderCellDef> NumEmps </th>
+      <td mat-cell *matCellDef="let element"> {{element.numEmps}} </td>
+    </ng-container>
+  
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef> Category </th>
+      <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+    </ng-container>
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="city">
+      <th mat-header-cell *matHeaderCellDef> City </th>
+      <td mat-cell *matCellDef="let element"> {{element.city}} </td>
+    </ng-container>
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef> State </th>
+      <td mat-cell *matCellDef="let element"> {{element.state}} </td>
+    </ng-container>
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="fundedDate">
+      <th mat-header-cell *matHeaderCellDef> FundedDate </th>
+      <td mat-cell *matCellDef="let element"> {{element.fundedDate}} </td>
+    </ng-container>
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="raisedAmt">
+      <th mat-header-cell *matHeaderCellDef> RaisedAmt</th>
+      <td mat-cell *matCellDef="let element"> {{element.raisedAmt}} </td>
+    </ng-container>
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="raisedCurrency">
+      <th mat-header-cell *matHeaderCellDef> RaisedCurrency </th>
+      <td mat-cell *matCellDef="let element"> {{element.raisedCurrency}} </td>
+    </ng-container>
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="round">
+      <th mat-header-cell *matHeaderCellDef> Round</th>
+      <td mat-cell *matCellDef="let element"> {{element.round}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Action</th>
+      <td mt-cell *matCellDef="let element" class="action-link">
+        <button (click)="openEdit(contentEdit, element)">Edit</button> |
+        <button (click)="openDelete(contentDelete, element)">Delete</button>
+      </td>
+    </ng-container>
+    
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+    </tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[10, 20, 50]"
+  showFirstLastButtons 
+  aria-label="Select page of periodic elements">
+</mat-paginator>
+  
+ <!--    
+   <table class="table table-bordered table-striped">
+      <thead>
+      <tr>
+        <th>permalink</th>
+        <th>company</th>
+        <th>numEmps</th>
+        <th>category</th>
+        <th>city</th>
+        <th>state</th>
+        <th>FundedDate</th>
+        <th>RaisedAmount</th>
+        <th>RaisedCurrency</th>
+        <th>round</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let friend of friends">
+        <td><span>{{friend.permalink}}</span></td>
+        <td><span>{{friend.company}}</span></td>
+        <td><span>{{friend.numEmps}}</span></td>
+        <td><span>{{friend.category}}</span></td>
+        <td><span>{{friend.city}}</span></td>
+        <td><span>{{friend.state}}</span></td>
+        <td><span>{{friend.fundedDate}}</span></td>
+        <td><span>{{friend.raisedAmt}}</span></td>
+        <td><span>{{friend.raisedCurrency}}</span></td>
+        <td><span>{{friend.round}}</span></td>
+        <td> 
+          <div ><button class="btn">
+          
+            <i id="myicon1" class="fa fa-edit" (click)="openEdit(contentEdit, friend)" ></i>Edit</button>
+        
+           <button class="btn " >
+          
+            <i id="myicon2" class="fa fa-remove" (click)="openDelete(contentDelete, friend)" ></i>Delete</button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table> -->
+  </div>
+
+  <ng-template #contentDelete let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Confirm Delete</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <h2>Are you sure you want to delete this record.</h2>
+      <div class="border text-center"> 
+        <button data-dismiss="modal" class="btn btn-danger" (click)="onDelete()">Yes, Delete!</button> 
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">New Entry</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+        <div class="form-group">
+          <label for="permalink">Permalink</label>
+          <div class="input-group">
+            <input id="permalink" name="permalink" class="form-control" ngModel >
+          </div>
+        </div>
+        <div class="form-group">
+            <label for="company">Company</label>
+            <div class="input-group">
+              <input id="company" name="company" class="form-control" ngModel>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="numEmps">numEmps</label>
+            <div class="input-group">
+              <input id="numEmps" name="numEmps" class="form-control" ngModel>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="category">category</label>
+            <div class="input-group">
+              <input id="category" name="numEmps" class="form-control" ngModel>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="city">city</label>
+            <div class="input-group">
+              <input id="city" name="city" class="form-control" ngModel>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="state">	state</label>
+            <div class="input-group">
+              <input id="state" name="state" class="form-control" ngModel>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="FundedDate">FundedDate</label>
+            <div class="input-group">
+              <input id="fundedDate" name="fundedDate" class="form-control" ngModel>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="RaisedAmount">RaisedAmount</label>
+            <div class="input-group">
+              <input id="raisedAmount" name="raisedAmount" class="form-control" ngModel>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="RaisedCurrency">RaisedCurrency</label>
+            <div class="input-group">
+              <input id="raisedCurrency" name="raisedCurrency" class="form-control" ngModel>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="round">round</label>
+            <div class="input-group">
+              <input id="round" name="round" class="form-control" ngModel>
+            </div>
+          </div>
+          <div class="border text-center">
+            <button data-dismiss="modal" class="btn btn-info">Submit</button>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div>
+  </ng-template>
+
+  <ng-template #contentEdit let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">New Entry</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="editForm" novalidate>
+        <div class="form-group">
+            <label for="id">Id</label>
+            <div class="input-group">
+              <input  formControlName="id" class="form-control" readonly >
+            </div>
+          </div>
+        <div class="form-group">
+          <label for="permalink">Permalink</label>
+          <div class="input-group">
+            <input formControlName="permalink" class="form-control"  >
+          </div>
+        </div>
+        <div class="form-group">
+            <label for="company">Company</label>
+            <div class="input-group">
+              <input formControlName="company" class="form-control" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="numEmps">numEmps</label>
+            <div class="input-group">
+              <input formControlName="numEmps" class="form-control" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="category">category</label>
+            <div class="input-group">
+              <input formControlName="category" class="form-control" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="city">city</label>
+            <div class="input-group">
+              <input formControlName="city" class="form-control" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="state">	state</label>
+            <div class="input-group">
+              <input formControlName="state" class="form-control" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="fundedDate">FundedDate</label>
+            <div class="input-group">
+              <input formControlName="fundedDate" class="form-control" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="raisedAmount">RaisedAmount</label>
+            <div class="input-group">
+              <input formControlName="raisedAmt" class="form-control" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="raisedCurrency">RaisedCurrency</label>
+            <div class="input-group">
+              <input formControlName="raisedCurrency" class="form-control" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="round">round</label>
+            <div class="input-group">
+              <input formControlName="round" class="form-control" >
+            </div>
+          </div>
+          <div class="border text-center">
+            <button data-dismiss="modal" class="btn btn-info" (click)="onSave()"  >Save Changes</button>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+    </div>
+  </ng-template>
