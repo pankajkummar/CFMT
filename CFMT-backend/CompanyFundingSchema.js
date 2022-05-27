@@ -1,0 +1,4 @@
+const CompanyFunding{
+    permalink: String
+
+}
